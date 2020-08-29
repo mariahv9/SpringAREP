@@ -1,17 +1,34 @@
 package edu.escuelaing.arep.componentTests;
 import edu.escuelaing.arep.microSpring.RequestMapping;
 
+/**
+ * Class that shows interface on web site
+ * @author Maria Fernanda Hernandez Vargas
+ */
 public class HelloController {
+
+    /**
+     * Method that shows Greetings on web site
+     * @return
+     */
     @RequestMapping ("/hello")
     public static String greetings () {
         return "Greetings from Spring Boot!";
     }
 
+    /**
+     * Methos that shows pi value on web site
+     * @return
+     */
     @RequestMapping ("/pi")
     public static String theValueOfPi () {
         return "Pi: " + Math.PI;
     }
 
+    /**
+     * Method that retuns euler value on web site
+     * @return
+     */
     @RequestMapping("/web") //localhost:36000/Apps/web
     public static String pageWeb (){
         String outputLine =

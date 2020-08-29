@@ -6,20 +6,35 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.logging.*;
 
+/**
+ * Class that connects with port on localhost
+ * @author Maria Fernanda Hernandez Vargas
+ */
 public class HttpServer {
 
     private int port = 36000;
     private boolean running = false;
     URIProcessor up;
 
+    /**
+     * Turn up port
+     * @param up
+     */
     public HttpServer(URIProcessor up) {
         this.up = up;
     }
 
+    /**
+     * Refresh port
+     * @param port
+     */
     public HttpServer(int port) {
         this.port = port;
     }
 
+    /**
+     * Start connection with server socket
+     */
     public void start() {
         try {
             ServerSocket serverSocket = null;
@@ -56,6 +71,11 @@ public class HttpServer {
         }
     }
 
+    /**
+     * Start process request
+     * @param clientSocket
+     * @throws IOException
+     */
     private void processRequest(Socket clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String inputLine;
@@ -83,10 +103,20 @@ public class HttpServer {
         in.close();
     }
 
+    /**
+     * Split entry link
+     * @param rawEntry
+     * @return
+     */
     private String[] createEntry(String rawEntry) {
         return rawEntry.split(":");
     }
 
+    /**
+     * Split request
+     * @param req
+     * @param out
+     */
     private void createResponse(Request req, PrintWriter out) {
         String outputLine = testResponse();
         URI theuri = req.getTheuri();
@@ -98,12 +128,21 @@ public class HttpServer {
         out.close();
     }
 
+    /**
+     * Get request
+     * @param theuri
+     * @param out
+     */
     private void getAppResponse(String theuri, PrintWriter out) {
         String response = up.executeService(theuri);
         String header = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n" + "\r\n";
         out.println(header + response);
     }
 
+    /**
+     * Shows Mi propio mensaje on web site
+     * @return
+     */
     private String testResponse() {
         String outputLine = "HTTP/1.1 200 OK\r\n"
                 + "Content-Type: text/html\r\n"
@@ -121,6 +160,11 @@ public class HttpServer {
         return outputLine;
     }
 
+    /**
+     * Get static services
+     * @param path
+     * @param out
+     */
     private void getStaticResource(String path, PrintWriter out) {
         Path file = Paths.get("target/classes/public_html" + path);
         try (InputStream in = Files.newInputStream(file);

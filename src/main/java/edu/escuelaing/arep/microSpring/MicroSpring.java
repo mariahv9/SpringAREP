@@ -9,9 +9,18 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that implements uri
+ * @author Maria Fernanda Hernandez Vargas
+ */
 public class MicroSpring implements URIProcessor {
     private Map<String, Method> webservices = new HashMap<>();
 
+    /**
+     * Mapping methods and services
+     * @param componentName
+     * @throws Exception
+     */
     public void mapService (String componentName) throws Exception{
         int nMethods = 0;
         for (Method m: Class.forName(componentName).getMethods()){
@@ -26,6 +35,11 @@ public class MicroSpring implements URIProcessor {
         System.out.println("No. of web services %d %n" + nMethods);
     }
 
+    /**
+     * Execute methods
+     * @param theuri
+     * @return
+     */
     public String executeService (String theuri){
         try {
             return webservices.get(theuri).invoke(null).toString();

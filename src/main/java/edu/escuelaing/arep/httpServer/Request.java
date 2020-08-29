@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that request service
+ * @author Maria Fernanda Hernandez Vargas
+ */
 public class Request {
     private String method;
     private String requestURI;
@@ -14,10 +18,18 @@ public class Request {
     private URI theuri;
     private Map<String,String> query;
 
+    /**
+     * Save request
+     * @param requestLine
+     */
     public Request(String requestLine){
         parseRequestLine(requestLine);
     }
 
+    /**
+     * Show link request service
+     * @param requestLine
+     */
     public void parseRequestLine(String requestLine){
         try {
             String[] components= requestLine.split("\\s");
@@ -32,30 +44,59 @@ public class Request {
 
     }
 
+    /**
+     * Get method request
+     * @return
+     */
     public String getMethod() {
         return method;
     }
 
+    /**
+     * Get uri request
+     * @return
+     */
     public String getRequestURI() {
         return requestURI;
     }
 
+    /**
+     * Get http
+     * @return
+     */
     public String getHTTPVersion() {
         return HTTPVersion;
     }
 
+    /**
+     * Transform to string entry and http
+     * @return
+     */
     public String toString(){
         return method + " " + requestURI + " " + HTTPVersion + "\n\r" + getTheuri() + "\n\r" + "Query: " + query;
     }
 
+    /**
+     * Get uri
+     * @return
+     */
     public URI getTheuri() {
         return theuri;
     }
 
+    /**
+     * Save uri
+     * @param theuri
+     */
     public void setTheuri(URI theuri) {
         this.theuri = theuri;
     }
 
+    /**
+     * Define query
+     * @param query
+     * @return
+     */
     private Map<String, String> parseQuery(String query) {
         if( query == null) return null;
         Map<String, String> theQuery = new HashMap();
@@ -69,6 +110,11 @@ public class Request {
         return theQuery;
     }
 
+    /**
+     * Get values of query
+     * @param varname
+     * @return
+     */
     public String getValFromQuery(String varname){
         return query.get(varname);
     }
